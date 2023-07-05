@@ -1,0 +1,44 @@
+/* .new_book{
+    position:absolute;
+    /* background-color:aqua; */
+    /* width: 40%;
+    top:100px;
+    left:200px; */
+ 
+
+.inputs{
+    display:flex;
+    flex-flow:column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
+
+}
+
+
+.hide{
+    opacity: 0;
+}
+
+.blur{
+    filter:blur(1px);
+    transition: all .1s ease-in-out;
+}
+
+.book-list{
+    display:flex;
+    flex-flow: row nowrap;
+    gap:2px;
+}
+
+.card{
+    margin: 2px 5px;
+    height: 100px;
+    background-color: aqua;
+    width: 200px;
+}
+
+
+.overlay{
+    display:none;
+}
