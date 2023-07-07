@@ -6,56 +6,66 @@ const container = document.querySelector('.container');
 const submit = document.getElementById('submit_btn');
 const form = document.getElementById('form');
 const overlay = document.getElementById('myOverlay');
-
+const cross = document.getElementById('cross');
+const inputs = document.querySelectorAll('.book_input');
 
 add_btn.addEventListener('click', ()=>{
     overlay.style.display = "block";
     container.classList.add('blur');
 })
 
-let book_name = document.getElementById("title").value;
-let author_name = document.getElementById("author").value;
-let pages= document.getElementById('pages');
+cross.addEventListener('click',event =>{
+    event.preventDefault();
+    container.classList.remove('blur');
+    overlay.style.display = "none";
+}
+);
 
-Book(book_name,author_name,pages);
+const myLibrary = [];
 
 
-const myLibrary =[
-    {
-        "title" : "harry",
-        "author" : "test",
-        "pages": 344
-    },
-    {
+submit.addEventListener('click', (event)=>
+{
+    event.preventDefault();
+    let book_name = document.getElementById("title").value;
+    let author_name = document.getElementById("author").value;
+    let pages= document.getElementById('pages').value;
+   if (book_name!='' &&author_name!=''&&pages!='') new Book(book_name,author_name,pages,false)
+}
+);
 
-        "title" : "harfffry",
-        "author" : "tesdddt",
-        "pages": 34
-    }
-];
 
-myLibrary.forEach((obj)=>{
-    let book = document.createElement('div');
-    book.classList.add('card');
-    book.innerText = `${obj.title},${obj.author},${obj.pages}`
-    card_container.append(book);
-})
 
-function Book(title,author,pages_no,status){
-    this.author  = author;
-    this.title = title;
-    this.pages = pages_no;
+
+
+
+function Book(book_name,author_name,pages,status){
+    this.title = book_name;
+    this.author = author_name;
+    this.pages = pages;
     this.status = status;
+  
     myLibrary.push(this);
+    console.log(myLibrary);
+   addBookToLibrary();
 }
 
 
-// submit.addEventListener('click',addBookToLibrary);
 
+function addBookToLibrary(){
+    myLibrary.forEach( (obj)=>{
+        if (obj.status==false){
+            let book = document.createElement('div');
+            book.classList.add('card');
+            book.innerText = `${obj.title},${obj.author},${obj.pages}`;
+            card_container.append(book);
+            obj.status = true;
+        }
+    })
+    inputs.forEach(element => {
+        element.value = '';
+});
 
-// function addBookToLibrary{
-
-// }
-
+}
 
 

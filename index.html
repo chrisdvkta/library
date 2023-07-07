@@ -6,19 +6,30 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <script src = "app.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <script src="https://kit.fontawesome.com/898d3f995c.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 
     <div class="container">
-        <div class="navbar">
-            <div class="links">
+        <div class="headercontainer">
+            <p class ="name">Krish Devkota</p>
+                <div class="headericon">
+                    <a href="https://github.com/chrisdvkta" target="_blank"> <i class="devicon-github-plain nav-icon"></i></a>
+                    <a href="https://www.linkedin.com/in/krish-devkota/" target="_blank"><i class="devicon-linkedin-plain nav-icon"></i></a>
+                    <a href="mailto:krish.devkota@deerwalk.edu.np" target="_blank"><i class="devicon-google-plain nav-icon"></i></a>
+                </div> 
             </div>
         </div>
 
+        <div class="productheader">
+            <p class ="productheader">Library</p>
+        </div>
         <div class="main">
 
-            <input type="button" value = "Add Book" id ="add_btn" class = "btn add-book">
-
+            <!-- <input type="button" value = "Add Book" id ="add_btn" class = "btn add-book"> -->
+            <i class="fa-solid fa-plus fa-spin-pulse btn add-book addbtn" id="add_btn" ></i>
           
 
             <div class="book-list">
@@ -32,14 +43,14 @@
         
         <div class="new_book">
             
-            <form id = "Form" name = "addbook">
-
+            <form id = "Form" name = "addbook" action = ''>
+                <button id="cross">&cross;</button>
             <label for="Title">Title</label>
-            <input type="text" id = "title">
+            <input type="text" id = "title" class ="book_input" required>
             <label for="Author">Author</label>
-            <input type="text" id = "author">
+            <input type="text" id = "author"  class ="book_input" required>
             <label for="Pages">Pages</label>
-            <input type="text" id = "pages" required>
+            <input type="text" id = "pages"  class ="book_input" required>
             <input type="submit" id ="submit_btn" value="Add"> 
         </form>
     </div>
