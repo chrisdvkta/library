@@ -20,14 +20,14 @@
                     <a href="https://www.linkedin.com/in/krish-devkota/" target="_blank"><i class="devicon-linkedin-plain nav-icon"></i></a>
                     <a href="mailto:krish.devkota@deerwalk.edu.np" target="_blank"><i class="devicon-google-plain nav-icon"></i></a>
                 </div> 
-            </div>
         </div>
+    
 
         <div class="productheader">
-            <p class ="productheader">Library</p>
+            <h1 class ="productheader">Library</h1>
         </div>
         <div class="main">
-
+            <h3 class="addtext">Add Book</h3>
             <!-- <input type="button" value = "Add Book" id ="add_btn" class = "btn add-book"> -->
             <i class="fa-solid fa-plus fa-spin-pulse btn add-book addbtn" id="add_btn" ></i>
           
@@ -43,15 +43,21 @@
         
         <div class="new_book">
             
+            <button id="cross">&cross;</button>
             <form id = "Form" name = "addbook" action = ''>
-                <button id="cross">&cross;</button>
-            <label for="Title">Title</label>
-            <input type="text" id = "title" class ="book_input" required>
-            <label for="Author">Author</label>
-            <input type="text" id = "author"  class ="book_input" required>
-            <label for="Pages">Pages</label>
-            <input type="text" id = "pages"  class ="book_input" required>
-            <input type="submit" id ="submit_btn" value="Add"> 
+                <div class="input-container">
+                    <label for="Title"></label>
+                    <input type="text" id = "title" class ="book_input" required> <span>Book Title</span>
+                </div>
+                <div class="input-container">    
+                    <label for="Author"></label>
+                    <input type="text" id = "author"  class ="book_input" required> <span>Author Name</span>
+                </div>
+                <div class="input-container">
+                <label for="Pages"></label>
+                    <input type="number" id = "pages"  class ="book_input" required> <span>Number of Pages</span>
+                </div>
+                <input type="submit" id ="submit_btn" value="Add"> 
         </form>
     </div>
 </div>
