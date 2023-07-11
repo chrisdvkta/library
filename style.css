@@ -4,6 +4,7 @@
     box-sizing: border-box;
     --icon-hover: #6f42c1;
     list-style-type: none;
+    text-decoration: none;
     --border-color: rgb(164, 152, 233);
     --dark-gray:#242424;
     color:white;
@@ -85,7 +86,8 @@ i{
 /* FORM OVERLAY */
 .overlay{
     display:none;
-    position:fixed;
+    position:absolute;
+    z-index: 1;
 } 
 
 .new_book{
