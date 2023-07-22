@@ -1,37 +1,67 @@
 const card_container = document.querySelector(".book-list");
 const para = document.createElement('p');
-const add_btn = document.getElementById('add_btn');
 const new_book = document.querySelector('.new_book');
 const container = document.querySelector('.container');
 const submit = document.getElementById('submit_btn');
-const form = document.getElementById('form');
 const overlay = document.getElementById('myOverlay');
-const cross = document.getElementById('cross');
 const inputs = document.querySelectorAll('.book_input');
 
-add_btn.addEventListener('click', ()=>{
-    overlay.style.display = "block";
-    container.classList.add('blur');
+const addBtn = document.querySelectorAll('[data-modal-target]');
+const closeBtn = document.querySelectorAll('[data-close-button]');
+
+addBtn.forEach(button=>{
+    button.addEventListener('click',()=>{
+        console.log(button.dataset.modalTarget);
+        const modal =document.getElementById(button.dataset.modalTarget);
+
+        openModal(modal);
+
+    })
+})
+closeBtn.forEach(button=>{
+    button.addEventListener('click',()=>{
+
+        const modal =button.closest('.new_book');
+        console.log(modal);
+        closeModal(modal);
+    })
 })
 
-cross.addEventListener('click',event =>{
-    event.preventDefault();
-    container.classList.remove('blur');
-    overlay.style.display = "none";
+function openModal(modal){
+    console.log(modal);
+    if (modal ==null) return;
+    modal.classList.add('active');
+    overlay.classList.add('active');
 }
-);
+function closeModal(modal){
+    if (modal ==null) return;
+    modal.classList.remove('active');
+    overlay.classList.remove('active');
+}
+
+overlay.addEventListener('click', ()=>{
+    const modals = document.querySelectorAll(".modal.active");
+    modals.forEach(modal =>{
+        closeModal(modal);
+    });
+})
+
 
 const myLibrary = [];
 
 
-submit.addEventListener('click', (event)=>
+
+
+submit.addEventListener('click', event=>
 {
     event.preventDefault();
     let book_name = document.getElementById("title").value;
     let author_name = document.getElementById("author").value;
     let pages= document.getElementById('pages').value;
-   if (book_name!='' &&author_name!=''&&pages!='') new Book(book_name,author_name,pages,false)
+   if(book_name!='' &&author_name!=''&&pages!='') new Book(book_name,author_name,pages,false) 
+    // closeModal(document.querySelector('.modal'));
 }
+
 );
 
 
@@ -56,8 +86,30 @@ function addBookToLibrary(){
     myLibrary.forEach( (obj)=>{
         if (obj.status==false){
             let book = document.createElement('div');
+            let title = document.createElement('p');
+            let author = document.createElement('p');
+            let pages = document.createElement('p');
+            const deleteBook = document.createElement("button");
+            deleteBook.classList.add("delete-book");
+            deleteBook.innerText="Delete";
+            const editBook = document.createElement("button");
+            editBook.classList.add("edit-book");
+            editBook.innerText="Edit";
+            let buttons= document.createElement('div');
+            buttons.classList.add("card-buttons");
             book.classList.add('card');
-            book.innerText = `${obj.title},${obj.author},${obj.pages}`;
+            title.classList.add('title');
+            author.classList.add('author');
+            pages.classList.add('pages');
+            title.innerText = `${obj.title}`
+            author.innerText = `${obj.author}`
+            pages.innerText = `${obj.pages}`;
+            
+            buttons.append(editBook);
+            buttons.append(deleteBook);
+            
+            book.append(title,author,pages);
+            book.append(buttons);
             card_container.append(book);
             obj.status = true;
         }
@@ -67,5 +119,9 @@ function addBookToLibrary(){
 });
 
 }
+
+// deleteBook.addEventListener("submit",(e)=>{
+//         closeModal(e);
+// })
 
 

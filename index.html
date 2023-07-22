@@ -18,7 +18,7 @@
                 <div class="headericon">
                     <a href="https://github.com/chrisdvkta" target="_blank"> <i class="devicon-github-plain nav-icon"></i></a>
                     <a href="https://www.linkedin.com/in/krish-devkota/" target="_blank"><i class="devicon-linkedin-plain nav-icon"></i></a>
-                    <a href="mailto:krish.devkota@deerwalk.edu.np" target="_blank"><i class="devicon-google-plain nav-icon"></i></a>
+                    <a href="ma ilto:krish.devkota@deerwalk.edu.np" target="_blank"><i class="devicon-google-plain nav-icon"></i></a>
                 </div> 
         </div>
     
@@ -29,7 +29,7 @@
         <div class="main">
             <h3 class="addtext">Add Book</h3>
             <!-- <input type="button" value = "Add Book" id ="add_btn" class = "btn add-book"> -->
-            <i class="fa-solid fa-plus fa-spin-pulse btn add-book addbtn" id="add_btn" ></i>
+            <i data-modal-target ="#modal" class="fa-solid fa-plus fa-spin-pulse btn add-book addbtn" id="add_btn" ></i>
           
 
             <div class="book-list">
@@ -37,14 +37,12 @@
                 
             </div>
         </div>
-    </div>
+ 
     
-    
-    <div class="overlay" id="myOverlay">
-
-        <div class="new_book">
-            
-            <button id="cross">&cross;</button>
+        
+        
+        <div class="new_book modal" id ="#modal">
+            <button data-close-button id="cross">&cross;</button>
             <form id = "Form" name = "addbook" action = ''>
                 <div class="input-container">
                     <label for="Title"></label>
@@ -61,8 +59,19 @@
                 <input type="submit" id ="submit_btn" value="Add"> 
         </form>
     </div>
+
+    <div class="footer">
+        <div class="footerheadername">
+            <p class="footername">Krish Devkota ©</p>
+        </div>
+        <div class="footericons">
+            <a href="https://github.com/chrisdvkta" target="_blank"> <i class="devicon-github-plain nav-icon"></i></a>
+            <a href="https://www.linkedin.com/in/krish-devkota/" target="_blank"><i class="devicon-linkedin-plain nav-icon"></i></a>
+            <a href="mailto:krish.devkota@deerwalk.edu.np" target="_blank"><i class="devicon-google-plain nav-icon"></i></a>
+        </div>
+    </div>
 </div>
-</div>
+<div class="overlay" id="myOverlay"></div>
 
 </body>
 </html>
