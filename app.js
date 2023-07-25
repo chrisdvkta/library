@@ -78,6 +78,7 @@ function Book(book_name,author_name,pages,status){
     myLibrary.push(this);
     console.log(myLibrary);
    addBookToLibrary();
+    eventAdd();
 }
 
 
@@ -89,27 +90,28 @@ function addBookToLibrary(){
             let title = document.createElement('p');
             let author = document.createElement('p');
             let pages = document.createElement('p');
-            const deleteBook = document.createElement("button");
-            deleteBook.classList.add("delete-book");
-            deleteBook.innerText="Delete";
-            const editBook = document.createElement("button");
-            editBook.classList.add("edit-book");
-            editBook.innerText="Edit";
-            let buttons= document.createElement('div');
-            buttons.classList.add("card-buttons");
             book.classList.add('card');
             title.classList.add('title');
             author.classList.add('author');
             pages.classList.add('pages');
             title.innerText = `${obj.title}`
             author.innerText = `${obj.author}`
-            pages.innerText = `${obj.pages}`;
-            
+            pages.innerText = `${obj.pages}`;           
+            book.append(title,author,pages);
+
+            const deleteBook = document.createElement("button");
+            deleteBook.classList.add("delete-book","book-button");
+
+            deleteBook.innerText="Delete";
+            const editBook = document.createElement("button");
+            editBook.classList.add("edit-book","book-button");
+            editBook.innerText="Edit";
+            let buttons= document.createElement('div');
+            buttons.classList.add("card-buttons");
             buttons.append(editBook);
             buttons.append(deleteBook);
-            
-            book.append(title,author,pages);
             book.append(buttons);
+            
             card_container.append(book);
             obj.status = true;
         }
@@ -120,8 +122,45 @@ function addBookToLibrary(){
 
 }
 
-// deleteBook.addEventListener("submit",(e)=>{
-//         closeModal(e);
-// })
+
+// function addButtons(){
+//     const deleteBook = document.createElement("button");
+//     deleteBook.classList.add("delete-book");
+//     deleteBook.innerText="Delete";
+//     const editBook = document.createElement("button");
+//     editBook.classList.add("edit-book");
+//     editBook.innerText="Edit";
+//     let buttons= document.createElement('div');
+
+//     buttons.classList.add("card-buttons");
+//     buttons.append(editBook);
+//     buttons.append(deleteBook);
+//     return buttons;
+// }
 
 
+// function buttonClick(obj){
+//     console.log("#1");
+//     obj.getElementsByTagName = "button";
+//     obj.forEach((button)=>{
+//         if(button.value==="Edit"){
+//             removeElement(button);
+//         }
+//         else if(button.value=="Delete"){
+//             console.log("dl");
+//         }
+//     });
+// }
+
+
+
+function eventAdd(){
+    let bookBtn = document.querySelectorAll(".book-button");
+bookBtn.forEach((button)=>{
+  
+    button.addEventListener('click',(e)=>{
+        ((e.target.parentNode).parentNode).remove();
+    });
+});
+
+}
