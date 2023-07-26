@@ -9,6 +9,9 @@ const inputs = document.querySelectorAll('.book_input');
 const addBtn = document.querySelectorAll('[data-modal-target]');
 const closeBtn = document.querySelectorAll('[data-close-button]');
 
+
+let bookIndex = 0; //linking card and object array through dataset.
+
 addBtn.forEach(button=>{
     button.addEventListener('click',()=>{
         console.log(button.dataset.modalTarget);
@@ -18,6 +21,7 @@ addBtn.forEach(button=>{
 
     })
 })
+
 closeBtn.forEach(button=>{
     button.addEventListener('click',()=>{
 
@@ -68,7 +72,6 @@ submit.addEventListener('click', event=>
 
 
 
-
 function Book(book_name,author_name,pages,status){
     this.title = book_name;
     this.author = author_name;
@@ -101,7 +104,7 @@ function addBookToLibrary(){
 
             const deleteBook = document.createElement("button");
             deleteBook.classList.add("delete-book","book-button");
-
+            deleteBook.dataset.index = bookIndex++;
             deleteBook.innerText="Delete";
             const editBook = document.createElement("button");
             editBook.classList.add("edit-book","book-button");
@@ -122,45 +125,42 @@ function addBookToLibrary(){
 
 }
 
-
-// function addButtons(){
-//     const deleteBook = document.createElement("button");
-//     deleteBook.classList.add("delete-book");
-//     deleteBook.innerText="Delete";
-//     const editBook = document.createElement("button");
-//     editBook.classList.add("edit-book");
-//     editBook.innerText="Edit";
-//     let buttons= document.createElement('div');
-
-//     buttons.classList.add("card-buttons");
-//     buttons.append(editBook);
-//     buttons.append(deleteBook);
-//     return buttons;
-// }
-
-
-// function buttonClick(obj){
-//     console.log("#1");
-//     obj.getElementsByTagName = "button";
-//     obj.forEach((button)=>{
-//         if(button.value==="Edit"){
-//             removeElement(button);
-//         }
-//         else if(button.value=="Delete"){
-//             console.log("dl");
-//         }
-//     });
-// }
-
-
-
 function eventAdd(){
     let bookBtn = document.querySelectorAll(".book-button");
-bookBtn.forEach((button)=>{
-  
-    button.addEventListener('click',(e)=>{
-        ((e.target.parentNode).parentNode).remove();
-    });
+    
+    bookBtn.forEach((button)=>{
+        button.addEventListener('click',(e)=>{
+            if (e.target.classList.contains("delete-book")){
+                myLibrary.splice(e.target.dataset.index,1);
+                ((e.target.parentNode).parentNode).remove();
+            }else if(e.target.classList.contains("edit-book")){
+                openModal(new_book);
+                let title;
+                let author; 
+                let pages;  
+                let state;
+                myLibrary.filter(function(item){
+                    title = item.title;
+                    author= item.author;
+                    pages = item.pages;
+                    state =item.status
+                })
+                console.log(title);
+                if (state){
+                    console.log("$1");
+                    console.log(e.target.id);
+                   if (e.target.id==="title"){
+                    console.log("$2");
+                    e.target.id.innerText = title;
+                   }
+                    
+
+                }
+                // let author = myLibrary[e.target.dataset.index].author;
+                // let pages = myLibrary[e.target.dataset.index].pages;
+            }
+        });
 });
 
 }
+
