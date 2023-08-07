@@ -62,6 +62,8 @@ submit.addEventListener('click', event=>
     let book_name = document.getElementById("title").value;
     let author_name = document.getElementById("author").value;
     let pages= document.getElementById('pages').value;
+
+    // if (event.)
    if(book_name!='' &&author_name!=''&&pages!='') new Book(book_name,author_name,pages,false) 
     // closeModal(document.querySelector('.modal'));
 }
@@ -130,34 +132,66 @@ function eventAdd(){
     
     bookBtn.forEach((button)=>{
         button.addEventListener('click',(e)=>{
+            const tgt = (e.target.parentNode).parentNode;
+            console.log(tgt);
             if (e.target.classList.contains("delete-book")){
                 myLibrary.splice(e.target.dataset.index,1);
                 ((e.target.parentNode).parentNode).remove();
             }else if(e.target.classList.contains("edit-book")){
                 openModal(new_book);
                 let title;
-                let author; 
-                let pages;  
+                let new_author; 
+                let new_pages;  
                 let state;
                 myLibrary.filter(function(item){
                     title = item.title;
-                    author= item.author;
-                    pages = item.pages;
-                    state =item.status
+                    console.log(title);
+                    
+                    new_author= item.author;
+                    console.log(new_author);
+                    
+                    new_pages = item.pages;
+                    console.log(new_pages);
+                    
+                    state =item.status;
+                    console.log(state);
+
                 })
-                console.log(title);
+    
                 if (state){
                     console.log("$1");
-                    console.log(e.target.id);
-                   if (e.target.id==="title"){
-                    console.log("$2");
-                    e.target.id.innerText = title;
-                   }
+                    console.log(tgt.childNodes);
+                    (tgt.childNodes).forEach(item => {
+                        if(item.classList.contains("title")){
+                            console.log("Title access");
+                            let edit_title = item;
+                            edit_title.innerText = "";
+                            // edit_title.innerTexgt
+
+                        }
+                        if(item.classList.contains("author")){
+                            console.log("author access");
+                            let edit_author = item;
+                            edit_author.innerText = "";
+                            // edit_title.innerTexgt
+
+                        }
+                        if(item.classList.contains("pages")){
+                            console.log("pages access");
+                            let edit_pages = item;
+                            edit_pages.innerText = "";
+                            // edit_title.innerTexgt
+
+                        }
+                    });
                     
 
-                }
+            }
                 // let author = myLibrary[e.target.dataset.index].author;
                 // let pages = myLibrary[e.target.dataset.index].pages;
+            
+            
+            
             }
         });
 });
