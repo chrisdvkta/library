@@ -50,6 +50,22 @@ overlay.addEventListener('click', ()=>{
     });
 })
 
+function EditModal(target,Index){
+    console.log(target.childNodes);
+    target.childNodes.forEach((node)=>{
+        if (node.classList.contains('content')){
+            node.setAttribute('contenteditable', 'true'); 
+            node.focus();
+        }
+        if (node.classList.contains('title')){
+            console.log(node.innerText);
+            myLibrary[Index].title = node.innerText;
+        }
+    })
+
+
+}
+
 
 const myLibrary = [];
 
@@ -63,7 +79,7 @@ submit.addEventListener('click', event=>
     let author_name = document.getElementById("author").value;
     let pages= document.getElementById('pages').value;
 
-    // if (event.)
+    
    if(book_name!='' &&author_name!=''&&pages!='') new Book(book_name,author_name,pages,false) 
     // closeModal(document.querySelector('.modal'));
 }
@@ -96,9 +112,9 @@ function addBookToLibrary(){
             let author = document.createElement('p');
             let pages = document.createElement('p');
             book.classList.add('card');
-            title.classList.add('title');
-            author.classList.add('author');
-            pages.classList.add('pages');
+            title.classList.add('title',"content");
+            author.classList.add('author',"content");
+            pages.classList.add('pages',"content");
             title.innerText = `${obj.title}`
             author.innerText = `${obj.author}`
             pages.innerText = `${obj.pages}`;           
@@ -111,6 +127,7 @@ function addBookToLibrary(){
             const editBook = document.createElement("button");
             editBook.classList.add("edit-book","book-button");
             editBook.innerText="Edit";
+            editBook.dataset.index = bookIndex -1;
             let buttons= document.createElement('div');
             buttons.classList.add("card-buttons");
             buttons.append(editBook);
@@ -138,26 +155,36 @@ function eventAdd(){
                 myLibrary.splice(e.target.dataset.index,1);
                 ((e.target.parentNode).parentNode).remove();
             }else if(e.target.classList.contains("edit-book")){
-                openModal(new_book);
                 let title;
                 let new_author; 
                 let new_pages;  
                 let state;
-                myLibrary.filter(function(item){
-                    title = item.title;
-                    console.log(title);
-                    
-                    new_author= item.author;
-                    console.log(new_author);
-                    
-                    new_pages = item.pages;
-                    console.log(new_pages);
-                    
-                    state =item.status;
-                    console.log(state);
+                let Index = e.target.dataset.index;
+                console.log(e.target.dataset.index);
+                
+                title = myLibrary[Index].title;
+                console.log(title);
+                EditModal(tgt,Index);
 
-                })
+                
+                // myLibrary.filter(function(item){
+                //     title = item.title;
+                //     console.log(title);
+                    
+                //     new_author= item.author;
+                //     console.log(new_author);
+                    
+                //     new_pages = item.pages;
+                //     console.log(new_pages);
+                    
+                //     state =item.status;
+                //     console.log(state);
+
+                // }) //logging every instance of array [use book dataset to acess array element]
     
+
+
+
                 if (state){
                     console.log("$1");
                     console.log(tgt.childNodes);
@@ -165,21 +192,21 @@ function eventAdd(){
                         if(item.classList.contains("title")){
                             console.log("Title access");
                             let edit_title = item;
-                            edit_title.innerText = "";
+                            // edit_title.innerText = "";
                             // edit_title.innerTexgt
 
                         }
                         if(item.classList.contains("author")){
                             console.log("author access");
                             let edit_author = item;
-                            edit_author.innerText = "";
+                            // edit_author.innerText = "";
                             // edit_title.innerTexgt
 
                         }
                         if(item.classList.contains("pages")){
                             console.log("pages access");
                             let edit_pages = item;
-                            edit_pages.innerText = "";
+                            // edit_pages.innerText = "";
                             // edit_title.innerTexgt
 
                         }
