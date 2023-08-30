@@ -9,8 +9,10 @@ const inputs = document.querySelectorAll('.book_input');
 const addBtn = document.querySelectorAll('[data-modal-target]');
 const closeBtn = document.querySelectorAll('[data-close-button]');
 
+const myLibrary = [];
 
 let bookIndex = 0; //linking card and object array through dataset.
+let currentBookIndex = 0; //to store index of the book details to be edited in the array myLibrary
 
 addBtn.forEach(button=>{
     button.addEventListener('click',()=>{
@@ -36,11 +38,19 @@ function openModal(modal){
     if (modal ==null) return;
     modal.classList.add('active');
     overlay.classList.add('active');
+    
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { 
+            closeModal(modal);
+        }
+    });
 }
+
 function closeModal(modal){
     if (modal ==null) return;
     modal.classList.remove('active');
     overlay.classList.remove('active');
+    reset();
 }
 
 overlay.addEventListener('click', ()=>{
@@ -50,38 +60,49 @@ overlay.addEventListener('click', ()=>{
     });
 })
 
-function EditModal(target,Index){
-    console.log(target.childNodes);
-    target.childNodes.forEach((node)=>{
-        if (node.classList.contains('content')){
-            node.setAttribute('contenteditable', 'true'); 
-            node.focus();
-        }
-        if (node.classList.contains('title')){
-            console.log(node.innerText);
-            myLibrary[Index].title = node.innerText;
-        }
+
+
+function EditModal(modal, index){
+
+    console.log(modal);
+    if (modal ==null) return;
+    modal.classList.add('active');
+    overlay.classList.add('active');
+    submit.value = "Edit";
+    inputs.forEach((input)=>{
+        console.log(input , input.id);
+        if (input.id =="title") input.value = `${myLibrary[index].title}`;
+        if (input.id =="author") input.value = `${myLibrary[index].author}`;
+        if (input.id =="pages") input.value = `${myLibrary[index].pages}`;
     })
-
-
 }
 
 
-const myLibrary = [];
 
 
 
 
 submit.addEventListener('click', event=>
 {
-    event.preventDefault();
-    let book_name = document.getElementById("title").value;
-    let author_name = document.getElementById("author").value;
-    let pages= document.getElementById('pages').value;
+    if (submit.value ==="Add"){
 
-    
-   if(book_name!='' &&author_name!=''&&pages!='') new Book(book_name,author_name,pages,false) 
-    // closeModal(document.querySelector('.modal'));
+        console.log(event)
+        event.preventDefault();
+        let book_name = document.getElementById("title").value;
+        let author_name = document.getElementById("author").value;
+        let pages= document.getElementById('pages').value;
+        
+        
+        if(book_name!='' &&author_name!=''&&pages!='') new Book(book_name,author_name,pages,false) 
+    }else if (submit.value==="Edit"){
+        event.preventDefault();
+        let book_name = document.getElementById("title").value;
+        let author_name = document.getElementById("author").value;
+        let pages= document.getElementById('pages').value;
+        EditObject(book_name,author_name,pages);
+        closeModal(new_book);
+    }
+        // closeModal(document.querySelector('.modal'));
 }
 
 );
@@ -128,6 +149,7 @@ function addBookToLibrary(){
             editBook.classList.add("edit-book","book-button");
             editBook.innerText="Edit";
             editBook.dataset.index = bookIndex -1;
+            book.dataset.index =bookIndex -1;
             let buttons= document.createElement('div');
             buttons.classList.add("card-buttons");
             buttons.append(editBook);
@@ -138,10 +160,7 @@ function addBookToLibrary(){
             obj.status = true;
         }
     })
-    inputs.forEach(element => {
-        element.value = '';
-});
-
+    reset();
 }
 
 function eventAdd(){
@@ -155,73 +174,55 @@ function eventAdd(){
                 myLibrary.splice(e.target.dataset.index,1);
                 ((e.target.parentNode).parentNode).remove();
             }else if(e.target.classList.contains("edit-book")){
-                let title;
-                let new_author; 
-                let new_pages;  
-                let state;
-                let Index = e.target.dataset.index;
-                console.log(e.target.dataset.index);
-                
-                title = myLibrary[Index].title;
-                console.log(title);
-                EditModal(tgt,Index);
+                currentBookIndex = e.target.dataset.index;
+                EditModal(new_book,currentBookIndex);
+            }
+                // let author = myLibrary[e.target.dataset.index].author;
+                // let pages = myLibrary[e.target.dataset.index].pages;
+        }
+        )    
+            
+        
+}
+    )};
 
-                
-                // myLibrary.filter(function(item){
-                //     title = item.title;
-                //     console.log(title);
-                    
-                //     new_author= item.author;
-                //     console.log(new_author);
-                    
-                //     new_pages = item.pages;
-                //     console.log(new_pages);
-                    
-                //     state =item.status;
-                //     console.log(state);
 
-                // }) //logging every instance of array [use book dataset to acess array element]
+function EditObject(title,author_name,pages){
+    myLibrary[currentBookIndex].title = title;
+    myLibrary[currentBookIndex].author = author_name;
+    myLibrary[currentBookIndex].pages = pages;
+    console.log(myLibrary);
+    console.log("Index Book : ", currentBookIndex);
+    let card = document.querySelectorAll(".card");
+        card.forEach((item)=>{
+        console.log(item);
+        console.log(item.dataset.index);
+        let currentCardIndex = item.dataset.index;
+        if (currentCardIndex ===currentBookIndex){
+                (item.childNodes).forEach((node)=>{
+                    console.log(node);
+                    if (node.classList.contains('title')){
+                        node.innerText = `${title}`;
+                    }
+                    if (node.classList.contains('author')){
+                        node.innerText = `${author_name}`;
+                    }
+                    if (node.classList.contains('pages')){
+                        node.innerText = `${pages}`;
+                    }
+                })
+        }
+    })
     
 
 
 
-                if (state){
-                    console.log("$1");
-                    console.log(tgt.childNodes);
-                    (tgt.childNodes).forEach(item => {
-                        if(item.classList.contains("title")){
-                            console.log("Title access");
-                            let edit_title = item;
-                            // edit_title.innerText = "";
-                            // edit_title.innerTexgt
-
-                        }
-                        if(item.classList.contains("author")){
-                            console.log("author access");
-                            let edit_author = item;
-                            // edit_author.innerText = "";
-                            // edit_title.innerTexgt
-
-                        }
-                        if(item.classList.contains("pages")){
-                            console.log("pages access");
-                            let edit_pages = item;
-                            // edit_pages.innerText = "";
-                            // edit_title.innerTexgt
-
-                        }
-                    });
-                    
-
-            }
-                // let author = myLibrary[e.target.dataset.index].author;
-                // let pages = myLibrary[e.target.dataset.index].pages;
-            
-            
-            
-            }
-        });
-});
-
 }
 
+
+function reset(){
+    inputs.forEach(element => {
+        element.value = '';
+});
+submit.value = "Add";
+}
