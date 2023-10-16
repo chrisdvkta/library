@@ -9,7 +9,8 @@ const inputs = document.querySelectorAll('.book_input');
 const addBtn = document.querySelectorAll('[data-modal-target]');
 const closeBtn = document.querySelectorAll('[data-close-button]');
 
-const myLibrary = [];
+const myLibrary = localStorage.getItem('item') ? JSON.parse(localStorage.getItem("item")) : [];
+console.log(myLibrary);
 
 let bookIndex = 0; //linking card and object array through dataset.
 let currentBookIndex = 0; //to store index of the book details to be edited in the array myLibrary
@@ -25,7 +26,7 @@ addBtn.forEach(button=>{
 })
 
 closeBtn.forEach(button=>{
-    button.addEventListener('click',()=>{
+    button.addEventListener('click',()=>{ 
 
         const modal =button.closest('.new_book');
         console.log(modal);
@@ -116,10 +117,10 @@ function Book(book_name,author_name,pages,status){
     this.author = author_name;
     this.pages = pages;
     this.status = status;
-  
     myLibrary.push(this);
     console.log(myLibrary);
-   addBookToLibrary();
+    localStorage.setItem('item', JSON.stringify(myLibrary));
+   addBookToLibary();
     eventAdd();
 }
 
@@ -127,7 +128,7 @@ function Book(book_name,author_name,pages,status){
 
 function addBookToLibrary(){
     myLibrary.forEach( (obj)=>{
-        if (obj.status==false){
+        if (obj.status==false || localStorage.getItem('item')){
             let book = document.createElement('div');
             let title = document.createElement('p');
             let author = document.createElement('p');
@@ -173,6 +174,7 @@ function eventAdd(){
             if (e.target.classList.contains("delete-book")){
                 myLibrary.splice(e.target.dataset.index,1);
                 ((e.target.parentNode).parentNode).remove();
+                localStorage.getItem("item", JSON.stringify(myLibrary));
             }else if(e.target.classList.contains("edit-book")){
                 currentBookIndex = e.target.dataset.index;
                 EditModal(new_book,currentBookIndex);
@@ -192,6 +194,7 @@ function EditObject(title,author_name,pages){
     myLibrary[currentBookIndex].author = author_name;
     myLibrary[currentBookIndex].pages = pages;
     console.log(myLibrary);
+    localStorage.getItem('item', JSON.stringify(myLibrary));
     console.log("Index Book : ", currentBookIndex);
     let card = document.querySelectorAll(".card");
         card.forEach((item)=>{
@@ -225,4 +228,9 @@ function reset(){
         element.value = '';
 });
 submit.value = "Add";
+}
+
+window.onload = function(){
+    addBookToLibrary();
+    eventAdd();
 }
